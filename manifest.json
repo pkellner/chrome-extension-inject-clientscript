@@ -1,0 +1,13 @@
+{
+  "name": "injected script test",
+  "version": "1.0.0",
+  "manifest_version": 2,
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "run_at": "document_idle",
+      "js": ["content-script.js"]
+    }
+  ],
+  "web_accessible_resources": ["*"]
+}
