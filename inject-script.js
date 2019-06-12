@@ -5,6 +5,8 @@
     version = $.fn.jquery;
   }
 
-  const event = new CustomEvent("jquery-version", { detail: version });
+  const length = __NEXT_DATA__ ? JSON.stringify(__NEXT_DATA__).length : 0;
+
+  const event = new CustomEvent("jquery-version", { detail: version + ' length:' + length });
   document.dispatchEvent(event);
 }
