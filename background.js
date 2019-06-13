@@ -20,6 +20,8 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
       ? "from a content script:" + sender.tab.url
       : "from the extension"
   );
+
+  // request has the info, just not as hello when being sent from inject-scrit adn content-script
   if (request.greeting == "hello") sendResponse({ farewell: "goodbye" });
 });
 
