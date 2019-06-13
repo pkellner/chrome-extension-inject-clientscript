@@ -16,6 +16,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     } else {
       alert(`content-scriptx: Return From inject-script  no event.detail`);
     }
+    debugger;
     if (request.greeting == "hello")
       sendResponse({ farewell: "goodbye " + event.detail });
   }
