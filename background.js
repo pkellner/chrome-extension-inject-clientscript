@@ -13,6 +13,16 @@ chrome.browserAction.onClicked.addListener(tab => {
   });
 });
 
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+  console.log(`chrome.runtime.onMessage listener`);
+  console.log(
+    sender.tab
+      ? "from a content script:" + sender.tab.url
+      : "from the extension"
+  );
+  if (request.greeting == "hello") sendResponse({ farewell: "goodbye" });
+});
+
 // chrome.tabs.onActivated.addListener(function(activeInfo) {
 //   console.log(activeInfo.tabId);
 //   chrome.browserAction.setBadgeText({
