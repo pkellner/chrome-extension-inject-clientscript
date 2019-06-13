@@ -1,10 +1,6 @@
 {
   // Use a block statement to prevent modifying global scope
-  let version = -1;
-  if ($ && $.fn && $.fn.jquery) {
-    version = $.fn.jquery;
-  }
-
+  let version = 98765;
   const event = new CustomEvent("jquery-version", { detail: version });
   document.dispatchEvent(event);
 }

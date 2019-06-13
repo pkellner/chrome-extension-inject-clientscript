@@ -1,10 +1,19 @@
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+  console.log(
+    sender.tab
+      ? "from a content script:" + sender.tab.url
+      : "from the extension"
+  );
+  if (request.greeting == "hello") sendResponse({ farewell: "goodbye" });
+});
+
 document.addEventListener("jquery-version", onVersionRecieved, { once: true });
 
 function onVersionRecieved(event) {
   if (event.detail) {
-    alert(`Page is using jQuery ${event.detail}`);
+    alert(`content-script: Return From inject-script ${event.detail}`);
   } else {
-    alert(`jQuery not detected`);
+    alert(`content-script: Return From inject-script  no event.detail`);
   }
 }
 
