@@ -1,30 +1,7 @@
+console.log("content_scripts...content-script.js");
+
+// listens for message from button click from toolbar in background.js
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-  console.log(
-    sender.tab
-      ? "from a content script:" + sender.tab.url
-      : "from the extension"
-  );
-
-  // if (request.greeting == "hello") sendResponse({ farewell: "goodbye" });
-  document.addEventListener("jquery-version", onVersionRecieved, {
-    once: true
-  });
-
-  function onVersionRecieved(event) {
-    if (event.detail) {
-      //alert(`content-scriptx: Return From inject-script ${event.detail}`);
-      console.log(`content-scriptx: Return From inject-script ${event.detail}`);
-    } else {
-      //alert(`content-scriptx: Return From inject-script  no event.detail`);
-      console.log(
-        `content-scriptx: Return From inject-script  no event.detail`
-      );
-    }
-
-    if (request.greeting == "hello")
-      sendResponse({ farewell: "goodbye " + event.detail });
-  }
-
   const versionScript = document.createElement("script");
   versionScript.src = chrome.runtime.getURL("inject-script.js");
   versionScript.onload = function autoUnload() {
@@ -37,37 +14,20 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 window.addEventListener(
   "message",
   function(event) {
-
     // We only accept messages from ourselves
     if (event.source != window) return;
 
-
     if (event.data.type && event.data.type == "FROM_PAGE") {
-      console.log("Content script received: " + event.data.text);
-      debugger;
-      chrome.runtime.sendMessage({greeting: `test from content-script:${event.data.text}`}, function(response) {
-        debugger;
-        console.log(response.farewell);
-      });
-
+      chrome.runtime.sendMessage(
+        {
+          version: event.data.version
+        },
+        function(response) {
+          // for now, nothing to do here.  just sending message and return will
+          //   come frm a sendMessage in inject-script.js
+        }
+      );
     }
   },
   false
 );
-
-// document.addEventListener("jquery-version", onVersionRecieved, { once: true });
-//
-// function onVersionRecieved(event) {
-//   if (event.detail) {
-//     alert(`content-script: Return From inject-script ${event.detail}`);
-//   } else {
-//     alert(`content-script: Return From inject-script  no event.detail`);
-//   }
-// }
-//
-// const versionScript = document.createElement("script");
-// versionScript.src = chrome.runtime.getURL("inject-script.js");
-// versionScript.onload = function autoUnload() {
-//   this.remove;
-// };
-// document.body.appendChild(versionScript);

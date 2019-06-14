@@ -1,15 +1,17 @@
 {
   // Use a block statement to prevent modifying global scope
-  let version = 987654;
-
-
-
-  const event = new CustomEvent("jquery-version", { detail: version });
-  document.dispatchEvent(event);
 
   debugger;
+  let version = -1;
+  if (jQuery && jQuery.fn && jQuery.fn.jquery) {
+    version = jQuery.fn.jquery;
+  }
+
   window.postMessage(
-    { type: "FROM_PAGE", text: "Hello from the webpage!" + version },
+    {
+      type: "FROM_PAGE",
+      version
+    },
     "*"
   );
 }
